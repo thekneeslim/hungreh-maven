@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>hungreh</artifactId>
+        <groupId>com.testing</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>hungreh-test</artifactId>
+
+    <!--<properties>-->
+        <!--<my.mock.application.port>8999</my.mock.application.port>-->
+    <!--</properties>-->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack random-mock</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.testing</groupId>
+                                    <artifactId>hungreh-mock</artifactId>
+                                    <version>1.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/random-mock</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack service</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.testing</groupId>
+                                    <artifactId>hungreh-service</artifactId>
+                                    <version>1.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/hungreh-service</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.bazaarvoice.maven.plugins</groupId>
+                <artifactId>process-exec-maven-plugin</artifactId>
+                <version>0.8</version>
+                <executions>
+                    <execution>
+                        <id>start random-mock</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>Starting random-mock</name>
+                            <workingDir>${basedir}</workingDir>
+                            <waitForInterrupt>false</waitForInterrupt>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-cp</argument>
+                                <argument>${project.build.directory}/random-mock/BOOT-INF/classes${path.separator}${project.build.directory}/random-mock/BOOT-INF/lib/*</argument>
+                                <argument>com.testing.MyMockApplication</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start service</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>starting hungreh-service</name>
+                            <workingDir>${basedir}</workingDir>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-cp</argument>
+                                <argument>${project.build.directory}/hungreh-service${path.separator}${project.build.directory}/hungreh-service/BOOT-INF/classes${path.separator}${project.build.directory}/hungreh-service/BOOT-INF/lib/*</argument>
+                                <!--<argument>-Dmy.mock.port=${my.mock.application.port}</argument>-->
+                                <argument>com.testing.HungrehApplication</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-all</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop-all</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
