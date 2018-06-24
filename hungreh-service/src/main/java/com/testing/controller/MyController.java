@@ -10,16 +10,16 @@ import org.springframework.web.client.RestTemplate;
 public class MyController {
 
     private RestTemplate restTemplate;
-    private int mockPort;
+    private String dependencyUrl;
 
     @Autowired
-    public MyController(RestTemplate restTemplate, @Value("${mockPort}") int mockPort) {
+    public MyController(RestTemplate restTemplate, @Value("${dependencyUrl}") String dependencyUrl) {
         this.restTemplate = restTemplate;
-        this.mockPort = mockPort;
+        this.dependencyUrl = dependencyUrl;
     }
 
     @GetMapping("/")
     public String whatevas() {
-        return restTemplate.getForEntity(String.format("http://localhost:%d/myMock", mockPort), String.class).getBody();
+        return restTemplate.getForEntity(dependencyUrl, String.class).getBody();
     }
 }
