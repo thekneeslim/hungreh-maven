@@ -1,0 +1,29 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start Mock" type="MavenRunConfiguration" factoryName="Maven" singleton="true">
+    <MavenSettings>
+      <option name="myGeneralSettings" />
+      <option name="myRunnerSettings" />
+      <option name="myRunnerParameters">
+        <MavenRunnerParameters>
+          <option name="profiles">
+            <set />
+          </option>
+          <option name="goals">
+            <list>
+              <option value="dependency:unpack@unpack random-mock" />
+              <option value="process-exec:start@start random-mock" />
+              <option value="-DmyMockPort=8999" />
+              <option value="-Dinterrupt=true" />
+            </list>
+          </option>
+          <option name="profilesMap">
+            <map />
+          </option>
+          <option name="resolveToWorkspace" value="false" />
+          <option name="workingDirPath" value="$PROJECT_DIR$/hungreh-test" />
+        </MavenRunnerParameters>
+      </option>
+    </MavenSettings>
+    <method />
+  </configuration>
+</component>

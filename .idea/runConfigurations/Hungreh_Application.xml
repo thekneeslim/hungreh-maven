@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Hungreh Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.testing.HungrehApplication" />
+    <option name="VM_PARAMETERS" value="-Dmy.passed.mock.port=8999" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <module name="hungreh-service" />
+    <envs />
+    <method />
+  </configuration>
+</component>
